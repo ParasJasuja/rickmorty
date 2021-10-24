@@ -31,6 +31,15 @@ const FilterCharacter = props => {
           ))}
         </optgroup>
       </select>
+      <button
+        className="reset-btn"
+        onClick={() => {
+          props.setFilterValue("any")
+          props.setCharacterSearch("")
+        }}
+      >
+        Reset
+      </button>
     </div>
   )
 }

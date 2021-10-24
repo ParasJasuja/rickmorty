@@ -13,9 +13,6 @@ const Layout = props => {
       })
     }
     props.setCharacterSearch(newValue)
-    if (props.setFilterValue) {
-      props.setFilterValue("any")
-    }
   }
   return (
     <div>

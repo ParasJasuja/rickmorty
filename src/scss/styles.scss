@@ -257,7 +257,7 @@ a{
     gap: 20px;
     padding: 0 1rem 2rem 1rem;
     select{
-        width: 90%;
+        width: 80%;
         background-color: $primaryBackground2;
         color: $textColor;
         padding: 0.5rem;
@@ -289,4 +289,12 @@ a{
             }
         }
     }
+}
+.reset-btn{
+    background-color: $primaryBackground;
+    border: none;
+    outline: none;
+    color: $textColor;
+    padding: 0.75rem 1.25rem;
+    border-radius: 10px;
 }

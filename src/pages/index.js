@@ -36,6 +36,7 @@ const IndexPage = ({ data }) => {
     setNoOfCharacters(prvs => prvs + 20)
   }
   React.useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     if (characterSearch === "" && filterValue === "any") {
       setCharactersList(characters)
     } else if (characterSearch !== "" && filterValue === "any") {
@@ -97,6 +98,7 @@ const IndexPage = ({ data }) => {
           species={species}
           filterValue={filterValue}
           setFilterValue={setFilterValue}
+          setCharacterSearch={setCharacterSearch}
         />
         <GridContainer>
           {charactersList.length > 0 ? (
