@@ -5,18 +5,18 @@ import ImageContainer from "./ImageContainer"
 const CharacterCard = props => {
   const character = props.character
   return (
-    <div className="c-character-card">
+    <div className="card">
       <Link
-        className="c-character-card__link"
+        className="card__link"
         to={"/character/" + character.name + character.id}
         key={character.id}
       >
         <div>
           <ImageContainer
-            className="c-image-container"
+            className="card__image-container"
             image={{
               src: character.image,
-              className: "character-image c-image-container__img",
+              className: "card__image-container__img",
               loading: "lazy",
             }}
             alt={character.name}

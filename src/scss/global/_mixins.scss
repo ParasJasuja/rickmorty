@@ -1,0 +1,21 @@
+@mixin gradientBorder() {
+    &::before{
+        content: " ";
+        position: absolute;
+        top: -1%;
+        left: -1%;
+        height: 102%;
+        width: 102%;
+        background: linear-gradient(275deg, $gradientColor1 , $gradientColor2);
+        border-radius: 20px;
+        z-index: -1;
+    }
+}
+
+@mixin screenSize($size) {
+    @if $size == medium{
+        @media screen and (min-width: 720px) {
+                @content
+        }
+    }
+}

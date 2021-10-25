@@ -1,45 +1,44 @@
 import { graphql } from "gatsby"
 import React from "react"
-import FlexContainer from "../components/FlexContainer"
 import ImageContainer from "../components/ImageContainer"
-import "../scss/styles.scss"
+import "../scss/main.scss"
 
 const character = ({ data, pageContext }) => {
   const ch = data.characters
   return (
-    <div className="p-character-template">
-      <h1 className="heading">{ch.name}</h1>
+    <div className="character">
+      <h1 className="character__heading">{ch.name}</h1>
       <div>
         <ImageContainer
-          className="c-image-container"
+          className="character__image-container"
           image={{
             src: ch.image,
-            className: "c-image-container__img",
+            className: "character__image-container__img",
             loading: "lazy",
           }}
           alt={ch.name}
         />
-        <section>
-          <FlexContainer>
-            <h3 className="l-flex-container__heading">Gender:</h3>
-            <p className="l-flex-container__des"> {ch.gender}</p>
-          </FlexContainer>
-          <FlexContainer>
-            <h3 className="l-flex-container__heading">Species:</h3>
-            <p className="l-flex-container__des"> {ch.species}</p>
-          </FlexContainer>
-          <FlexContainer>
-            <h3 className="l-flex-container__heading">Status:</h3>
-            <p className="l-flex-container__des"> {ch.status}</p>
-          </FlexContainer>
-          <FlexContainer>
+        <section className="character__description">
+          <div className="character__description__flex-container">
+            <h3>Gender:</h3>
+            <p> {ch.gender}</p>
+          </div>
+          <div className="character__description__flex-container">
+            <h3>Species:</h3>
+            <p> {ch.species}</p>
+          </div>
+          <div className="character__description__flex-container">
+            <h3>Status:</h3>
+            <p> {ch.status}</p>
+          </div>
+          <div className="character__description__flex-container">
             {ch.type && (
               <>
-                <h3 className="l-flex-container__heading">Type:</h3>
-                <p className="l-flex-container__des"> {ch.type}</p>
+                <h3>Type:</h3>
+                <p> {ch.type}</p>
               </>
             )}
-          </FlexContainer>
+          </div>
         </section>
       </div>
     </div>

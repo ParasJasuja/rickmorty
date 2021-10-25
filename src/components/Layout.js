@@ -15,7 +15,7 @@ const Layout = props => {
     props.setCharacterSearch(newValue)
   }
   return (
-    <div className="l-layout-component">
+    <div className="l-layout">
       <div className="navbar">
         {props.search && (
           <form

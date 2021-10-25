@@ -3,7 +3,7 @@ import { graphql } from "gatsby"
 import GridContainer from "../components/GridContainer"
 import CharacterCard from "../components/CharacterCard"
 import Layout from "../components/Layout"
-import "../scss/styles.scss"
+import "../scss/main.scss"
 
 const IndexPage = ({ data }) => {
   const [characterSearch, setCharacterSearch] = React.useState("")
@@ -106,33 +106,27 @@ const IndexPage = ({ data }) => {
             return <CharacterCard key={ch.id} character={ch} />
           })
         ) : (
-          <h2 className="heading">No Match Found</h2>
+          <h2 className="grid-container__heading">No Match Found</h2>
         )}
       </GridContainer>
       <div className="links">
         {noOfCharacters / 20 === 1 ? (
-          <button className="btn btn__link btn__link__disabled">prvs</button>
+          <button className="links__btn links__btn--disabled">prvs</button>
         ) : (
-          <button
-            className="btn btn__link btn__hover--effect"
-            onClick={prvsPage}
-          >
+          <button className="links__btn links__btn--hover" onClick={prvsPage}>
             prvs
           </button>
         )}
 
         {Math.ceil(charactersList.length / 20) !== 0 && (
-          <p className="link__pages">
+          <p className="links__pages">
             {noOfCharacters / 20}/{Math.ceil(charactersList.length / 20)}
           </p>
         )}
-        {noOfCharacters / 20 === Math.ceil(charactersList.length / 20) ? (
-          <button className="btn btn__link btn__link__disabled">next</button>
+        {noOfCharacters / 20 >= Math.ceil(charactersList.length / 20) ? (
+          <button className="links__btn links__btn--disabled">next</button>
         ) : (
-          <button
-            className="btn btn__link btn__hover--effect"
-            onClick={nextPage}
-          >
+          <button className="links__btn links__btn--hover" onClick={nextPage}>
             next
           </button>
         )}

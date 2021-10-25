@@ -2,9 +2,9 @@ import React from "react"
 
 const FilterCharacter = props => {
   return (
-    <div className="filter-box">
+    <div className="navbar__filter-box">
       <select
-        className="filter-box__filter"
+        className="navbar__filter-box__filter"
         value={props.filterValue}
         onChange={e => props.setFilterValue(e.target.value)}
       >
@@ -32,7 +32,7 @@ const FilterCharacter = props => {
         </optgroup>
       </select>
       <button
-        className="btn btn__reset"
+        className="navbar__btn"
         onClick={() => {
           props.setFilterValue("any")
           props.setCharacterSearch("")

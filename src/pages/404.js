@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Link } from "gatsby"
-import "../scss/styles.scss"
+import "../scss/main.scss"
 
 const NotFoundPage = () => (
   <div className="p-not-found-page">
