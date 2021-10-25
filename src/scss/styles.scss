@@ -20,27 +20,6 @@ $gradientColor2: #800080;
         z-index: -1;
     }
 }
-@mixin moreLess($content){
-    display: block;
-    text-align: center;
-    font-size: 0.85rem;
-    background: none;
-    border: none;
-    outline: none;
-    margin: 0 auto;
-    color: inherit;
-    padding: 2rem 0.5rem;
-    box-shadow: none;
-    cursor: pointer;
-    &::after{
-        content: $content;
-        font-size: inherit;
-        color: $gradientColor1;
-    }
-    &:hover{
-        color: $gradientColor1;
-    }
-}
 body{
     background-color: $primaryBackground2;
     color: $textColor;
@@ -53,22 +32,16 @@ a{
     text-decoration: none;
     
 }
-.disabled{
-    color: $primaryBackground3;
-    cursor: not-allowed;
+h2{
+    text-align: center;
 }
+
 .heading{
     font-size: 2rem;
     text-align: center;
     grid-column: 1/-1;
 }
-.view-more{
-    @include moreLess(" v")
-}
-.view-less{
-    @include moreLess(" ^")
-}
-.grid-container{
+.l-grid-container{
     display: grid;
     min-height: 400px;
     max-width: 1360px;
@@ -78,7 +51,8 @@ a{
     place-items: center;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 }
-.character-card{
+.c-character-card{
+    $self: &;
     position: relative;
     width: 80%;
     max-width: 280px;
@@ -89,7 +63,7 @@ a{
     background-color: $primaryBackground;
     transition: transform 0.1s ease-in-out;
     @include gradientBorder();
-    a{
+    #{$self}__link{
         display: block;
         height: 100%;
         width: 100%;
@@ -97,7 +71,7 @@ a{
         border: inherit;
         border-radius: inherit;
     }
-    h2{
+    #{$self}__h2{
         color: $textColor;
         padding: 1rem;
         margin: 0;
@@ -105,196 +79,176 @@ a{
     &:hover{
         transform: scale(1.05);
     }
-    
-}
-.character-image-container{
-    width: 100%;
+    .c-image-container{
+        width: 100%;
     height: auto;
     border-radius: 20px;
     overflow: hidden;
     margin: 0 auto 10px auto;
     background-color: $primaryBackground3;
-    img{
+    }
+}
+.c-image-container{
+    $self: &;
+    #{$self}__img{
         display: block;
         width: 100%;
         min-height: 200px;
         height: auto;
         border-radius: 20px;
     }
-    }
-    h2{
-        text-align: center;
-    }
-
-.single-image-container{
-    position: relative;
+}
+.p-character-template{
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 auto;
+    .c-image-container{
+        position: relative;
+    top: 0;
     min-width: 250px;
     min-height: 220px;
     height: fit-content;
     width: fit-content;
     margin: 10px auto;
     border-radius: 20px;
-    box-shadow: 5px 8px 10px 2px $primaryBackground3;
-    img{
-        display: block;
-        width: 100%;
-        border-radius: 20px;
+    box-shadow: 5px 8px 10px 2px $primaryBackground3;   
     }
-    
 }
-.character-page{
-    width: 100%;
+.l-flex-container{
+    $self: &;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    flex-direction: column;
-}
-.character-details{
-    width: fit-content;
+    padding: 0.5rem;
     margin: 0 auto;
-    max-width: 720px;
-    width: 90%;
-
-    .flex-container{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        h3{
-            flex: 1;
-            font-size: 1.5rem;
-            padding: 0.5rem 1rem 0.5rem 0;
-            margin: 0;
-        }
-        p{
-            flex: 1;
-            font-size: 1.5rem;
-            padding: 0;
-            margin: 0;
-            padding-left: 1rem;
-        }
+    #{$self}__heading,#{$self}__des{
+        flex: 1;
+        font-size: 1.5rem;
+        margin: 0;
+    }
+    #{$self}__heading{
+    }
+    #{$self}__des{
+        padding-left: 1rem;
     }
 }
 
 .navbar{
+    $self: &;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    font-size: 1rem;
-    padding: 1rem 5px;
-    padding-bottom: 0;
-    
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 1rem 5px 2rem 5px;
     margin: 0 auto;
-    div{
-        a{
-            color: $lightText;
-            &:hover{
-                color: $textColor;
-            }
-        }
-    }
-    form{
+    font-size: 1rem;
+    #{$self}__form{
+        min-width: 250px;
         flex: 1;
-        input{
-            display: block;
-            width: 80%;
-            padding: 0.85rem;
-            border-radius: 0.5rem;
-            margin: 0 auto;
-            outline: 1px solid $primaryBackground ;
-            background-color: $primaryBackground3;
-            border: none;
-            color: $textColor;
-        }
+    }
+    #{$self}__search{
+        display: block;
+        width: 100%;
+        padding: 0.85rem;
+        margin: 0 auto;
+        background-color: $primaryBackground3;
+        color: $textColor;
+        outline: 1px solid $primaryBackground ;
+        border: none;
+        border-radius: 0.5rem;
     }
     @media screen and(min-width:720px) {
         &{
             max-width: 1380px;
-            font-size: 1.15rem;
         }
     }
 }
 .links{
+    $self: &;
     display: flex;
     justify-content: space-around;
     max-width: 750px;
     margin: 0 auto;
     padding: 2rem 1rem;
-    p{
+    #{$self}__pages{
         margin: 0;
         cursor:default;
     }
-    .link-btn{
-        padding: 0;
-        margin: 0;
-        background: none;
-        border: none;
-        outline: none;
-        
-    }
-    .link-btn-hover{
-        color: $textColor;
-        &:hover{
-            color: $gradientColor1;
-        }
-    }
-    button:first-child::before{
+    .btn:first-child::before{
         content: "<< ";
         
     }
-    button:last-child::after{
+    .btn:last-child::after{
         content: " >>";
         
     }
 }
 
-.filter-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 1400px;
-    margin: 0 auto;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding: 0 1rem 2rem 1rem;
-    select{
-        width: 80%;
-        background-color: $primaryBackground2;
-        color: $textColor;
-        padding: 0.5rem;
-        border-radius: 10px;
-    }
-}
-.not-found-page{
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    h1{
-        color: $textColor;
-        font-size: 24rem;
-        margin: 0;
-        padding: 0;
-    }
-    p{
-        font-size: 2.5rem;
-        color: $textColor;
-        margin: 0;
-        padding: 0;
-        a{
-            font-size: 1.5rem;
-            color: $gradientColor1;
-            ::before{
-                content: "<< ";
-            }
-        }
-    }
-}
-.reset-btn{
-    background-color: $primaryBackground;
+.btn{
     border: none;
     outline: none;
     color: $textColor;
     padding: 0.75rem 1.25rem;
     border-radius: 10px;
+}
+.btn__reset{
+    background-color: $primaryBackground;
+}
+.btn__link{
+    background: none;
+}
+.btn__hover--effect:hover{
+    color: $gradientColor1;
+}
+.btn__link__disabled{
+    color: $primaryBackground3;
+    cursor: not-allowed;
+}
+.filter-box{
+    $self: &;
+    max-width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    flex-wrap: wrap;
+    gap: 20px;
+    #{$self}__filter{
+        min-width: 150px;
+        padding: 0.5rem;
+        background-color: $primaryBackground2;
+        color: $textColor;
+        border-radius: 10px;
+    }
+}
+.p-not-found-page{
+    $self: &;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    #{$self}__404{
+        font-size: 24rem;
+        margin: 0;
+        padding: 0;
+        color: $textColor;
+    }
+    #{$self}__error{
+        font-size: 2.5rem;
+        margin: 0;
+        padding: 0;
+        color: $textColor;
+        #{$self}__error__back{
+            font-size: 1.5rem;
+            color: $gradientColor1;
+        }
+        #{$self}__error__back::before{
+            content: "<< ";
+        }
+    }
 }

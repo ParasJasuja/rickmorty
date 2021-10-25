@@ -17,13 +17,34 @@ exports.sourceNodes = async ({
     671
   )}`
 
-  const rickMorty = await axios.get(rickMortyURL)
-  const query = await axios.get(rickMortyURL)
+  const rickMorty = await axios.get(rickMortyURL).catch(function (error) {
+    if (error.response) {
+      console.log(error.response.data)
+      console.log(error.response.status)
+      console.log(error.response.headers)
+    } else if (error.request) {
+      console.log(error.request)
+    } else {
+      console.log("Error", error.message)
+    }
+    console.log(error.config)
+  })
+  const query = await axios.get(rickMortyURL).catch(function (error) {
+    if (error.response) {
+      console.log(error.response.data)
+      console.log(error.response.status)
+      console.log(error.response.headers)
+    } else if (error.request) {
+      console.log(error.request)
+    } else {
+      console.log("Error", error.message)
+    }
+    console.log(error.config)
+  })
   rickMorty.data.forEach(character => {
     const nodeContent = JSON.stringify(character)
     const nodeMeta = {
       id: character.id.toString(),
-      //       //id: createNodeId(`char-data-${character.id}`),
       parent: null,
       children: [],
       internal: {
@@ -60,23 +81,4 @@ exports.createPages = async ({ graphql, actions }) => {
       },
     })
   })
-  //creating characterList pages
-  // const totalCharacters = data.allCharacters.totalCount
-  // const characterListTemplate = path.resolve(
-  //   "./src/templates/character-list.js"
-  // )
-  // const characterPerPage = 20
-  // const noOfPages = Math.ceil(totalCharacters / characterPerPage)
-  // Array.from({ length: noOfPages }).forEach((_, i) => {
-  //   createPage({
-  //     path: i === 0 ? `/characters` : `/characters/${i + 1}`,
-  //     component: characterListTemplate,
-  //     context: {
-  //       limit: characterPerPage,
-  //       skip: i * characterPerPage,
-  //       noOfPages,
-  //       currentPage: i + 1,
-  //     },
-  //   })
-  // })
 }

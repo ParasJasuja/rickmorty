@@ -1,5 +1,5 @@
-import { Link } from "gatsby"
 import React from "react"
+import FilterCharacter from "./FilterCharacter"
 
 const Layout = props => {
   const changeSearchValueHandler = e => {
@@ -15,14 +15,17 @@ const Layout = props => {
     props.setCharacterSearch(newValue)
   }
   return (
-    <div>
+    <div className="l-layout-component">
       <div className="navbar">
-        <div>
-          <Link to="/">Home</Link>
-        </div>
         {props.search && (
-          <form>
+          <form
+            className="navbar__form"
+            onSubmit={e => {
+              e.preventDefault()
+            }}
+          >
             <input
+              className="navbar__search"
               type="search"
               placeholder="Search"
               onChange={changeSearchValueHandler}
@@ -30,9 +33,7 @@ const Layout = props => {
             />
           </form>
         )}
-        <div>
-          <Link to="/Characters">Characters</Link>
-        </div>
+        <FilterCharacter {...props} />
       </div>
       {props.children}
     </div>

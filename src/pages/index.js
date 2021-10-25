@@ -4,7 +4,6 @@ import GridContainer from "../components/GridContainer"
 import CharacterCard from "../components/CharacterCard"
 import Layout from "../components/Layout"
 import "../scss/styles.scss"
-import FilterCharacter from "../components/FilterCharacter"
 
 const IndexPage = ({ data }) => {
   const [characterSearch, setCharacterSearch] = React.useState("")
@@ -51,60 +50,56 @@ const IndexPage = ({ data }) => {
 
   React.useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    const filterCharacter = () => {
+      const newCharactersList = characters.filter(ch => {
+        return (
+          ch.type.toLowerCase() === filterValue ||
+          ch.status.toLowerCase() === filterValue ||
+          ch.species.toLowerCase() === filterValue
+        )
+      })
+      return newCharactersList
+    }
+    const searchCharacter = chList => {
+      const newCharactersList = chList.filter(ch => {
+        const name = ch.name.toLowerCase()
+        return name.indexOf(characterSearch.toLowerCase()) > -1
+      })
+      return newCharactersList
+    }
     if (characterSearch === "" && filterValue === "any") {
       setCharactersList(characters)
     } else if (characterSearch !== "" && filterValue === "any") {
-      const newCharactersList = characters.filter(ch => {
-        const name = ch.name.toLowerCase()
-        return name.indexOf(characterSearch.toLowerCase()) > -1
-      })
-
+      const newCharactersList = searchCharacter(characters)
       setCharactersList(newCharactersList)
     } else if (characterSearch === "" && filterValue !== "any") {
-      const newCharactersList = characters.filter(ch => {
-        return (
-          ch.type.toLowerCase() === filterValue ||
-          ch.status.toLowerCase() === filterValue ||
-          ch.species.toLowerCase() === filterValue
-        )
-      })
+      const newCharactersList = filterCharacter()
       setCharactersList(newCharactersList)
     } else if (characterSearch !== "" && filterValue !== "any") {
-      const newFilterCharacters = characters.filter(ch => {
-        return (
-          ch.type.toLowerCase() === filterValue ||
-          ch.status.toLowerCase() === filterValue ||
-          ch.species.toLowerCase() === filterValue
-        )
-      })
-      const newCharactersList = newFilterCharacters.filter(ch => {
-        const name = ch.name.toLowerCase()
-        return name.indexOf(characterSearch.toLowerCase()) > -1
-      })
+      const newFilterCharacters = filterCharacter()
+      const newCharactersList = searchCharacter(newFilterCharacters)
       setCharactersList(newCharactersList)
     } else {
       setCharactersList(prvs => prvs)
     }
   }, [noOfCharacters, characterSearch, filterValue])
 
+  React.useEffect(() => {
+    setNoOfCharacters(20)
+  }, [characterSearch, filterValue])
   return (
     <Layout
       characters={characters}
-      setCharactersList={setCharactersList}
       characterSearch={characterSearch}
+      types={types}
+      status={status}
+      species={species}
+      filterValue={filterValue}
+      setCharactersList={setCharactersList}
       setFilterValue={setFilterValue}
       setCharacterSearch={setCharacterSearch}
       search
     >
-      <h2 className="heading">Few Characters</h2>
-      <FilterCharacter
-        types={types}
-        status={status}
-        species={species}
-        filterValue={filterValue}
-        setFilterValue={setFilterValue}
-        setCharacterSearch={setCharacterSearch}
-      />
       <GridContainer>
         {charactersList.length > 0 ? (
           charactersList.slice(noOfCharacters - 20, noOfCharacters).map(ch => {
@@ -116,22 +111,28 @@ const IndexPage = ({ data }) => {
       </GridContainer>
       <div className="links">
         {noOfCharacters / 20 === 1 ? (
-          <button className="link-btn disabled">prvs</button>
+          <button className="btn btn__link btn__link__disabled">prvs</button>
         ) : (
-          <button className="link-btn link-btn-hover" onClick={prvsPage}>
+          <button
+            className="btn btn__link btn__hover--effect"
+            onClick={prvsPage}
+          >
             prvs
           </button>
         )}
 
         {Math.ceil(charactersList.length / 20) !== 0 && (
-          <p>
+          <p className="link__pages">
             {noOfCharacters / 20}/{Math.ceil(charactersList.length / 20)}
           </p>
         )}
         {noOfCharacters / 20 === Math.ceil(charactersList.length / 20) ? (
-          <button className="link-btn disabled">next</button>
+          <button className="btn btn__link btn__link__disabled">next</button>
         ) : (
-          <button className="link-btn link-btn-hover" onClick={nextPage}>
+          <button
+            className="btn btn__link btn__hover--effect"
+            onClick={nextPage}
+          >
             next
           </button>
         )}
