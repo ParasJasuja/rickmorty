@@ -10,12 +10,29 @@ const IndexPage = ({ data }) => {
   const [characterSearch, setCharacterSearch] = React.useState("")
   const [filterValue, setFilterValue] = React.useState("any")
   const [noOfCharacters, setNoOfCharacters] = React.useState(20)
-  const [viewMore, setViewMore] = React.useState(1)
   const characters = data.allCharacters.nodes ? data.allCharacters.nodes : []
   const [charactersList, setCharactersList] = React.useState(characters)
   const types = []
   const status = []
   const species = []
+  const nextPage = () => {
+    if (charactersList.length - 1 > noOfCharacters) {
+      setNoOfCharacters(prvs => prvs + 20)
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      })
+    }
+  }
+  const prvsPage = () => {
+    if (noOfCharacters - 20 > 0) {
+      setNoOfCharacters(prvs => prvs - 20)
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      })
+    }
+  }
   characters.forEach(ch => {
     if (!types.includes(ch.type) && ch.type !== "") {
       types.push(ch.type)
@@ -32,9 +49,6 @@ const IndexPage = ({ data }) => {
     }
   })
 
-  const loadMoreCharacters = () => {
-    setNoOfCharacters(prvs => prvs + 20)
-  }
   React.useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     if (characterSearch === "" && filterValue === "any") {
@@ -72,14 +86,6 @@ const IndexPage = ({ data }) => {
       setCharactersList(prvs => prvs)
     }
   }, [noOfCharacters, characterSearch, filterValue])
-  React.useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    charactersList.length > noOfCharacters
-      ? setViewMore(1)
-      : charactersList.length < 20
-      ? setViewMore(0)
-      : setViewMore(-1)
-  }, [charactersList])
 
   return (
     <Layout
@@ -90,43 +96,46 @@ const IndexPage = ({ data }) => {
       setCharacterSearch={setCharacterSearch}
       search
     >
-      <section>
-        <h2 className="heading">Few Characters</h2>
-        <FilterCharacter
-          types={types}
-          status={status}
-          species={species}
-          filterValue={filterValue}
-          setFilterValue={setFilterValue}
-          setCharacterSearch={setCharacterSearch}
-        />
-        <GridContainer>
-          {charactersList.length > 0 ? (
-            charactersList.slice(0, noOfCharacters).map(ch => {
-              return <CharacterCard key={ch.id} character={ch} />
-            })
-          ) : (
-            <h2 className="heading">No Match Found</h2>
-          )}
-        </GridContainer>
-      </section>
-      {viewMore === 1 ? (
-        <button className="view-more" onClick={loadMoreCharacters}>
-          View More
-        </button>
-      ) : viewMore === -1 ? (
-        <button
-          className="view-less"
-          onClick={() => {
-            setNoOfCharacters(20)
-            setViewMore(true)
-          }}
-        >
-          View Less
-        </button>
-      ) : (
-        <p></p>
-      )}
+      <h2 className="heading">Few Characters</h2>
+      <FilterCharacter
+        types={types}
+        status={status}
+        species={species}
+        filterValue={filterValue}
+        setFilterValue={setFilterValue}
+        setCharacterSearch={setCharacterSearch}
+      />
+      <GridContainer>
+        {charactersList.length > 0 ? (
+          charactersList.slice(noOfCharacters - 20, noOfCharacters).map(ch => {
+            return <CharacterCard key={ch.id} character={ch} />
+          })
+        ) : (
+          <h2 className="heading">No Match Found</h2>
+        )}
+      </GridContainer>
+      <div className="links">
+        {noOfCharacters / 20 === 1 ? (
+          <button className="link-btn disabled">prvs</button>
+        ) : (
+          <button className="link-btn link-btn-hover" onClick={prvsPage}>
+            prvs
+          </button>
+        )}
+
+        {Math.ceil(charactersList.length / 20) !== 0 && (
+          <p>
+            {noOfCharacters / 20}/{Math.ceil(charactersList.length / 20)}
+          </p>
+        )}
+        {noOfCharacters / 20 === Math.ceil(charactersList.length / 20) ? (
+          <button className="link-btn disabled">next</button>
+        ) : (
+          <button className="link-btn link-btn-hover" onClick={nextPage}>
+            next
+          </button>
+        )}
+      </div>
     </Layout>
   )
 }
