@@ -65,10 +65,12 @@ const IndexPage = ({ data }) => {
           </button>
         )}
 
-        <p>
-          {noOfCharacters / 20}/{Math.ceil(charactersList.length / 20)}
-        </p>
-        {noOfCharacters / 20 === charactersList.length / 20 ? (
+        {Math.ceil(charactersList.length / 20) !== 0 && (
+          <p>
+            {noOfCharacters / 20}/{Math.ceil(charactersList.length / 20)}
+          </p>
+        )}
+        {noOfCharacters / 20 === Math.ceil(charactersList.length / 20) ? (
           <button className="link-btn disabled">next</button>
         ) : (
           <button className="link-btn link-btn-hover" onClick={nextPage}>
